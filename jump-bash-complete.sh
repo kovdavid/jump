@@ -11,7 +11,6 @@ __davsx_jump_complete() {
 	aliases=$(cut -f1 $JUMP_FILE | paste -sd " " -)
 
 	if [ $COMP_CWORD == 1 ] ; then
-		COMPREPLY=()
 		COMPREPLY=( $(compgen -W "${commands} ${aliases}" -- $cur) )
 		return 0
 	fi
