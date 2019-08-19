@@ -1,0 +1,7 @@
+Usage:
+
+git clone https://github.com/DavsX/jump
+cd jump
+source jump
+alias j="__davsx_jump"
+j help

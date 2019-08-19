@@ -1,0 +1,80 @@
+#!/bin/bash
+
+function __davsx_jump {
+	JUMP_FILE=${DAVSX_JUMP_FILE:-~/.jump}
+
+	read -r -d '' HELP << END_HELP
+Usage:
+	$0 help - get help
+	$0 list - list all jump aliases
+	$0 get X - get jump target for X
+	$0 set X - set jump target for X to current directory
+	$0 set X DIR - set jump target for X to DIR
+	$0 remove X - remove jump alias for X
+END_HELP
+
+	if [ ! -f $JUMP_FILE ] ; then
+		touch $JUMP_FILE
+	fi
+
+	if [ $1 == "list" ] ; then
+		cat $JUMP_FILE
+		return 0
+	elif [ $1 == "get" ] ; then
+		if [ -z $2 ] ; then
+			echo "Usage: $0 $1 alias"
+			return 1
+		fi
+
+		DIR=$(grep "^$2\>" $JUMP_FILE | cut -f2)
+		if [ -z $DIR ] ; then
+			echo "Entry not found for $2"
+			return 1
+		else
+			echo $DIR
+			return 0
+		fi
+	elif [ $1 == "set" ] ; then
+		if [ -z $2 ] ; then
+			echo "Jump alias missing"
+			echo -e "$HELP"
+			return 1
+		fi
+
+		TARGET=${3:-$(pwd)}
+
+		DIR=$(grep "^$2\>" $JUMP_FILE | cut -f2)
+		if [ -z $DIR ] ; then
+			echo -e "$2\t$TARGET" >> $JUMP_FILE
+			return 0
+		else
+			echo "$2 is already aliased to $DIR"
+			return 1
+		fi
+	elif [ $1 == "remove" ] ; then
+		if [ -z $2 ] ; then
+			echo "Jump alias missing"
+			echo -e "$HELP"
+			return 1
+		fi
+
+		sed -i "/^$2\t/d" $JUMP_FILE
+		return 0
+	elif [ $1 == "help" ] ; then
+		echo -e "$HELP"
+		return 0
+	elif [ $# -eq 1 ] ; then
+		DIR=$(grep "^$1\>" $JUMP_FILE | cut -f2)
+		if [ -z $DIR ] ; then
+			echo "$1 is not aliased"
+			return 1
+		else
+			cd $DIR
+			return 0
+		fi
+	else
+		echo "Unknown arguments: $@"
+		echo -e "$HELP"
+		return 1
+	fi
+}
