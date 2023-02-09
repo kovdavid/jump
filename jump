@@ -64,7 +64,7 @@ END_HELP
 		echo -e "$HELP"
 		return 0
 	elif [ $# -eq 1 ] ; then
-		DIR=$(grep "^$1\>" $JUMP_FILE | cut -f2)
+		DIR=$(grep "^$1\s" $JUMP_FILE | cut -f2)
 		if [ -z $DIR ] ; then
 			echo "$1 is not aliased"
 			return 1
