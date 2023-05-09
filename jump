@@ -17,6 +17,11 @@ END_HELP
 		touch $JUMP_FILE
 	fi
 
+	if [ -z "$1" ] ; then
+		echo -e "$HELP"
+		return 1
+    fi
+
 	if [ $1 == "list" ] ; then
 		cat $JUMP_FILE
 		return 0
