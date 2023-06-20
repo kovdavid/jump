@@ -6,7 +6,7 @@
 
 ```
 cd ~/workspace
-git clone https://github.com/DavsX/jump
+git clone https://github.com/kovdavid/jump
 echo "source ~/workspace/jump/jump" >> .bashrc
 echo "alias j='__davsx_jump'" >> .bashrc
 
