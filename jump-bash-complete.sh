@@ -1,9 +1,9 @@
 #!/bin/bash
 
-JUMP_FILE=${DAVSX_JUMP_FILE:-~/.jump}
-
 __davsx_jump_complete() {
 	local cur prev commands aliases
+
+	JUMP_FILE=${DAVSX_JUMP_FILE:-~/.jump}
 
 	cur="${COMP_WORDS[COMP_CWORD]}"
 	prev="${COMP_WORDS[COMP_CWORD-1]}"
