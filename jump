@@ -48,7 +48,7 @@ END_HELP
 
 		TARGET=${3:-$(pwd)}
 
-		DIR=$(grep "^$2\>" $JUMP_FILE | cut -f2)
+		DIR=$(grep "^$2\b" $JUMP_FILE | cut -f2)
 		if [ -z $DIR ] ; then
 			echo -e "$2\t$TARGET" >> $JUMP_FILE
 			return 0
